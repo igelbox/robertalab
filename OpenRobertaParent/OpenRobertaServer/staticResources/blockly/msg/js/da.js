@@ -1178,6 +1178,7 @@ Blockly.Msg.SENSOR_GYRO_GETSAMPLE_TOOLTIP_WEDO = "Is the gyro sensor tilted in t
 Blockly.Msg.SENSOR_HUMIDITY = "humidity sensor";  // untranslated
 Blockly.Msg.SENSOR_HUMIDITY_ARDUINO = "humidity sensor DHT11";  // untranslated
 Blockly.Msg.SENSOR_HUMIDITY_GETSAMPLE_TOOLTIP = "Gets the current reading from the humidity sensor in percent.";  // untranslated
+Blockly.Msg.SENSOR_HUMIDITY_SENSEBOX = "humidity/temperature sensor HDC1080";  // untranslated
 Blockly.Msg.SENSOR_INFRARED = "infrarød sensor";
 Blockly.Msg.SENSOR_INFRARED_DISTANCE_GETSAMPLE_TOOLTIP_WEDO = "Gets the current relative distance from the infrared sensor. The values are between 1, close, and 10, further away.";  // untranslated
 Blockly.Msg.SENSOR_IRSEEKER = "HT infrared sensor";  // untranslated

@@ -1,7 +1,7 @@
 {
 	"@metadata": {
 		"author": "Ellen Spertus <ellen.spertus@gmail.com>",
-		"lastupdated": "2019-01-03 13:36:56.443194",
+		"lastupdated": "2019-01-10 11:41:14.984722",
 		"locale": "en",
 		"messagedocumentation" : "qqq"
 	},
@@ -631,9 +631,9 @@
 	"MENU_USER": "login",
 	"MENU_START_BRICK": "run on »$«",
 	"MENU_EXPORT_PROG": "export program",
-	"MENU_IMPORT_PROG": "import program",
+	"MENU_IMPORT_PROG": "import program ...",
 	"MENU_CHECK": "check",
-	"MENU_NEW": "new ...",
+	"MENU_NEW": "new",
 	"MENU_LIST": "list ...",
 	"MENU_SAVE": "save",
 	"MENU_SAVE_AS": "save as ...",
@@ -1338,6 +1338,7 @@
 	"RELAY_ARDUINO": "relay SRD-05VDC-SL-C",
 	"SENSOR_HUMIDITY": "humidity sensor",
 	"SENSOR_HUMIDITY_ARDUINO": "humidity sensor DHT11",
+	"SENSOR_HUMIDITY_SENSEBOX": "humidity/temperature sensor HDC1080",
 	"AND": "and",
 	"STEP_MOTOR": "step motor",
 	"STEP_MOTOR_ARDUINO": "step motor 28BYJ-48",

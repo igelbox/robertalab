@@ -1178,6 +1178,7 @@ Blockly.Msg.SENSOR_GYRO_GETSAMPLE_TOOLTIP_WEDO = "Lutar gyrosensorn på rätt s�
 Blockly.Msg.SENSOR_HUMIDITY = "fuktsensor";
 Blockly.Msg.SENSOR_HUMIDITY_ARDUINO = "humidity sensor DHT11";  // untranslated
 Blockly.Msg.SENSOR_HUMIDITY_GETSAMPLE_TOOLTIP = "Avläs aktuellt värde för fuktsensorn";
+Blockly.Msg.SENSOR_HUMIDITY_SENSEBOX = "humidity/temperature sensor HDC1080";  // untranslated
 Blockly.Msg.SENSOR_INFRARED = "infraröd sensor";
 Blockly.Msg.SENSOR_INFRARED_DISTANCE_GETSAMPLE_TOOLTIP_WEDO = "Få aktuellt relativt avstånd från den infraröda sensorn. Värdena är mellan 1, nära och 10, längre bort.";
 Blockly.Msg.SENSOR_IRSEEKER = "HT infraröd sensor";

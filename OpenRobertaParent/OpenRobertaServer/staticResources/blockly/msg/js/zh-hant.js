@@ -1178,6 +1178,7 @@ Blockly.Msg.SENSOR_GYRO_GETSAMPLE_TOOLTIP_WEDO = "陀螺感應器是否以指示
 Blockly.Msg.SENSOR_HUMIDITY = "濕度感應器";
 Blockly.Msg.SENSOR_HUMIDITY_ARDUINO = "humidity sensor DHT11";  // untranslated
 Blockly.Msg.SENSOR_HUMIDITY_GETSAMPLE_TOOLTIP = "從濕度感應器獲取當前讀數。";
+Blockly.Msg.SENSOR_HUMIDITY_SENSEBOX = "humidity/temperature sensor HDC1080";  // untranslated
 Blockly.Msg.SENSOR_INFRARED = "紅外線感應器";
 Blockly.Msg.SENSOR_INFRARED_DISTANCE_GETSAMPLE_TOOLTIP_WEDO = "獲取紅外感應器的當前相對距離。值介於1接近和10距離更遠之間。";
 Blockly.Msg.SENSOR_IRSEEKER = "HT紅外感應器";
