@@ -100,4 +100,5 @@ public interface SC {
     String IDONE = "IDONE";
     String ANY = "ANY";
     String ENTER = "ENTER";
+    String PRESSURE = "PRESSURE";
 }

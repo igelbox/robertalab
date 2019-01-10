@@ -27,6 +27,7 @@ import de.fhg.iais.roberta.syntax.lang.expr.Var;
 import de.fhg.iais.roberta.syntax.sensor.generic.HumiditySensor;
 import de.fhg.iais.roberta.syntax.sensor.generic.KeysSensor;
 import de.fhg.iais.roberta.syntax.sensor.generic.LightSensor;
+import de.fhg.iais.roberta.syntax.sensor.generic.TemperatureSensor;
 import de.fhg.iais.roberta.syntax.sensor.generic.TimerSensor;
 import de.fhg.iais.roberta.syntax.sensor.generic.UltrasonicSensor;
 import de.fhg.iais.roberta.syntax.sensor.generic.VoltageSensor;
@@ -102,7 +103,7 @@ public class SenseboxCppVisitor extends AbstractCommonArduinoCppVisitor implemen
 
     @Override
     public Void visitClearDisplayAction(ClearDisplayAction<Void> clearDisplayAction) {
-        this.sb.append("_display_" + clearDisplayAction.getPort() + ".clearDisplay();");
+        this.sb.append("_display_").append(clearDisplayAction.getPort()).append(".clearDisplay();");
         return null;
     }
 
@@ -113,7 +114,7 @@ public class SenseboxCppVisitor extends AbstractCommonArduinoCppVisitor implemen
 
     @Override
     public Void visitToneAction(ToneAction<Void> toneAction) {
-        this.sb.append("tone(_buzzer_" + toneAction.getPort() + ",");
+        this.sb.append("tone(_buzzer_").append(toneAction.getPort()).append(",");
         toneAction.getFrequency().visit(this);
         this.sb.append(", ");
         toneAction.getDuration().visit(this);
@@ -124,7 +125,7 @@ public class SenseboxCppVisitor extends AbstractCommonArduinoCppVisitor implemen
     @Override
     public Void visitLightAction(LightAction<Void> lightAction) {
         if ( !lightAction.getMode().toString().equals(BlocklyConstants.DEFAULT) ) {
-            this.sb.append("digitalWrite(_led_" + lightAction.getPort() + ", " + lightAction.getMode().getValues()[0] + ");");
+            this.sb.append("digitalWrite(_led_").append(lightAction.getPort()).append(", ").append(lightAction.getMode().getValues()[0] + ");");
         } else {
             if ( lightAction.getRgbLedColor().getClass().equals(ColorConst.class) ) {
                 String hexValue = ((ColorConst<Void>) lightAction.getRgbLedColor()).getRgbValue();
@@ -150,15 +151,15 @@ public class SenseboxCppVisitor extends AbstractCommonArduinoCppVisitor implemen
             }
             if ( lightAction.getRgbLedColor().getClass().equals(Var.class) ) {
                 String tempVarName = ((Var<Void>) lightAction.getRgbLedColor()).getValue();
-                this.sb.append("analogWrite(_led_red_" + lightAction.getPort() + ", RCHANNEL(");
+                this.sb.append("analogWrite(_led_red_").append(lightAction.getPort()).append(", RCHANNEL(");
                 this.sb.append(tempVarName);
                 this.sb.append("));");
                 this.nlIndent();
-                this.sb.append("analogWrite(_led_green_" + lightAction.getPort() + ", GCHANNEL(");
+                this.sb.append("analogWrite(_led_green_").append(lightAction.getPort()).append(", GCHANNEL(");
                 this.sb.append(tempVarName);
                 this.sb.append("));");
                 this.nlIndent();
-                this.sb.append("analogWrite(_led_blue_" + lightAction.getPort() + ", BCHANNEL(");
+                this.sb.append("analogWrite(_led_blue_").append(lightAction.getPort()).append(", BCHANNEL(");
                 this.sb.append(tempVarName);
                 this.sb.append("));");
                 this.nlIndent();
@@ -169,7 +170,7 @@ public class SenseboxCppVisitor extends AbstractCommonArduinoCppVisitor implemen
             Channels.put("green", ((RgbColor<Void>) lightAction.getRgbLedColor()).getG());
             Channels.put("blue", ((RgbColor<Void>) lightAction.getRgbLedColor()).getB());
             Channels.forEach((k, v) -> {
-                this.sb.append("analogWrite(_led_" + k + "_" + lightAction.getPort() + ", ");
+                this.sb.append("analogWrite(_led_").append(k).append("_").append(lightAction.getPort()).append(", ");
                 v.visit(this);
                 this.sb.append(");");
                 this.nlIndent();
@@ -208,39 +209,56 @@ public class SenseboxCppVisitor extends AbstractCommonArduinoCppVisitor implemen
 
     @Override
     public Void visitKeysSensor(KeysSensor<Void> button) {
-        this.sb.append("digitalRead(_button_" + button.getPort() + ")");
+        this.sb.append("digitalRead(_button_").append(button.getPort()).append(")");
         return null;
     }
 
     @Override
     public Void visitLightSensor(LightSensor<Void> lightSensor) {
-        this.sb.append("analogRead(_output_" + lightSensor.getPort() + ")/10.24");
+        this.sb.append("analogRead(_output_").append(lightSensor.getPort()).append(")/10.24");
         return null;
     }
 
     @Override
     public Void visitVoltageSensor(VoltageSensor<Void> potentiometer) {
-        this.sb.append("((double)analogRead(_potentiometer_" + potentiometer.getPort() + "))*5/1024");
+        this.sb.append("((double)analogRead(_potentiometer_").append(potentiometer.getPort()).append("))*5/1024");
         return null;
     }
 
     @Override
     public Void visitUltrasonicSensor(UltrasonicSensor<Void> ultrasonicSensor) {
-        this.sb.append("_hcsr04_" + ultrasonicSensor.getPort() + ".getDistance()");
+        this.sb.append("_hcsr04_").append(ultrasonicSensor.getPort()).append(".getDistance()");
         return null;
     }
 
     @Override
     public Void visitHumiditySensor(HumiditySensor<Void> humiditySensor) {
+        this.sb.append("_hdc1080_").append(humiditySensor.getPort());
         switch ( humiditySensor.getMode() ) {
             case SC.HUMIDITY:
-                this.sb.append("_hdc1080_" + humiditySensor.getPort() + ".getHumidity()");
+                this.sb.append(".getHumidity()");
                 break;
             case SC.TEMPERATURE:
-                this.sb.append("_hdc1080_" + humiditySensor.getPort() + ".getTemperature()");
+                this.sb.append(".getTemperature()");
                 break;
             default:
-                throw new DbcException("Invalide mode for Humidity Sensor!");
+                throw new DbcException("Invalide mode for Humidity Sensor!" + humiditySensor.getMode());
+        }
+        return null;
+    }
+
+    @Override
+    public Void visitTemperatureSensor(TemperatureSensor<Void> temperatureSensor) {
+        this.sb.append("_bmp280_").append(temperatureSensor.getPort());
+        switch ( temperatureSensor.getMode() ) {
+            case SC.TEMPERATURE:
+                this.sb.append(".getTemperature()");
+                break;
+            case SC.PRESSURE:
+                this.sb.append(".getPressure()");
+                break;
+            default:
+                throw new DbcException("Invalide mode for BMP280 Sensor!" + temperatureSensor.getMode());
         }
         return null;
     }
@@ -282,6 +300,10 @@ public class SenseboxCppVisitor extends AbstractCommonArduinoCppVisitor implemen
                     break;
                 case SC.HUMIDITY:
                     this.sb.append("_hdc1080_").append(usedConfigurationBlock.getUserDefinedPortName()).append(".begin();");
+                    this.nlIndent();
+                    break;
+                case SC.TEMPERATURE:
+                    this.sb.append("_bmp280_").append(usedConfigurationBlock.getUserDefinedPortName()).append(".begin()");
                     this.nlIndent();
                     break;
                 // no additional configuration needed:
@@ -330,6 +352,10 @@ public class SenseboxCppVisitor extends AbstractCommonArduinoCppVisitor implemen
                     break;
                 case SC.HUMIDITY:
                     this.sb.append("HDC1080 _hdc1080_").append(blockName).append(";");
+                    this.nlIndent();
+                    break;
+                case SC.TEMPERATURE:
+                    this.sb.append("BMP280 _bmp280_").append(blockName).append(";");
                     this.nlIndent();
                     break;
                 case SC.ULTRASONIC:

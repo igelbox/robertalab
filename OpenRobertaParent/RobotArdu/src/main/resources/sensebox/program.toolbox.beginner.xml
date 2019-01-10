@@ -35,6 +35,7 @@
     <block type="robSensors_timer_reset"/>
     <block type="robSensors_potentiometer_getSample"/>
     <block type="robSensors_humidity_getSample"/>
+    <block type="robSensors_temperature_getSample"/>
     <block type="robSensors_ultrasonic_getSample"/>
   </category>
   <category name="TOOLBOX_CONTROL" svg="true">
