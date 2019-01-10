@@ -28,6 +28,7 @@ import de.fhg.iais.roberta.syntax.sensor.generic.HumiditySensor;
 import de.fhg.iais.roberta.syntax.sensor.generic.KeysSensor;
 import de.fhg.iais.roberta.syntax.sensor.generic.LightSensor;
 import de.fhg.iais.roberta.syntax.sensor.generic.TimerSensor;
+import de.fhg.iais.roberta.syntax.sensor.generic.UltrasonicSensor;
 import de.fhg.iais.roberta.syntax.sensor.generic.VoltageSensor;
 import de.fhg.iais.roberta.util.dbc.DbcException;
 import de.fhg.iais.roberta.visitor.collect.SenseboxUsedHardwareCollectorVisitor;
@@ -44,30 +45,30 @@ public class SenseboxCppVisitor extends AbstractCommonArduinoCppVisitor implemen
 
     @Override
     public Void visitMainTask(MainTask<Void> mainTask) {
-        decrIndentation();
-        nlIndent();
+        this.decrIndentation();
+        this.nlIndent();
         this.sb.append("unsigned long _time = millis();");
-        nlIndent();
+        this.nlIndent();
         mainTask.getVariables().visit(this);
-        nlIndent();
-        generateConfigurationVariables();
-        nlIndent();
-        generateUserDefinedMethods();
-        nlIndent();
+        this.nlIndent();
+        this.generateConfigurationVariables();
+        this.nlIndent();
+        this.generateUserDefinedMethods();
+        this.nlIndent();
         this.sb.append("void setup()");
-        nlIndent();
+        this.nlIndent();
         this.sb.append("{");
-        incrIndentation();
-        nlIndent();
+        this.incrIndentation();
+        this.nlIndent();
         this.sb.append("Serial.begin(9600); ");
-        nlIndent();
-        generateConfigurationSetup();
-        generateUsedVars();
+        this.nlIndent();
+        this.generateConfigurationSetup();
+        this.generateUsedVars();
         this.sb.delete(this.sb.lastIndexOf("\n"), this.sb.length());
-        decrIndentation();
-        nlIndent();
+        this.decrIndentation();
+        this.nlIndent();
         this.sb.append("}");
-        nlIndent();
+        this.nlIndent();
         return null;
     }
 
@@ -143,7 +144,7 @@ public class SenseboxCppVisitor extends AbstractCommonArduinoCppVisitor implemen
                     this.sb.append(", ");
                     this.sb.append(v);
                     this.sb.append(");");
-                    nlIndent();
+                    this.nlIndent();
                 });
                 return null;
             }
@@ -152,15 +153,15 @@ public class SenseboxCppVisitor extends AbstractCommonArduinoCppVisitor implemen
                 this.sb.append("analogWrite(_led_red_" + lightAction.getPort() + ", RCHANNEL(");
                 this.sb.append(tempVarName);
                 this.sb.append("));");
-                nlIndent();
+                this.nlIndent();
                 this.sb.append("analogWrite(_led_green_" + lightAction.getPort() + ", GCHANNEL(");
                 this.sb.append(tempVarName);
                 this.sb.append("));");
-                nlIndent();
+                this.nlIndent();
                 this.sb.append("analogWrite(_led_blue_" + lightAction.getPort() + ", BCHANNEL(");
                 this.sb.append(tempVarName);
                 this.sb.append("));");
-                nlIndent();
+                this.nlIndent();
                 return null;
             }
             Map<String, Expr<Void>> Channels = new HashMap<>();
@@ -171,7 +172,7 @@ public class SenseboxCppVisitor extends AbstractCommonArduinoCppVisitor implemen
                 this.sb.append("analogWrite(_led_" + k + "_" + lightAction.getPort() + ", ");
                 v.visit(this);
                 this.sb.append(");");
-                nlIndent();
+                this.nlIndent();
             });
         }
         return null;
@@ -224,6 +225,12 @@ public class SenseboxCppVisitor extends AbstractCommonArduinoCppVisitor implemen
     }
 
     @Override
+    public Void visitUltrasonicSensor(UltrasonicSensor<Void> ultrasonicSensor) {
+        this.sb.append("_hcsr04_" + ultrasonicSensor.getPort() + ".getDistance()");
+        return null;
+    }
+
+    @Override
     public Void visitHumiditySensor(HumiditySensor<Void> humiditySensor) {
         switch ( humiditySensor.getMode() ) {
             case SC.HUMIDITY:
@@ -259,25 +266,26 @@ public class SenseboxCppVisitor extends AbstractCommonArduinoCppVisitor implemen
             switch ( usedConfigurationBlock.getComponentType() ) {
                 case SC.LED:
                     this.sb.append("pinMode(_led_").append(usedConfigurationBlock.getUserDefinedPortName()).append(", OUTPUT);");
-                    nlIndent();
+                    this.nlIndent();
                     break;
                 case SC.RGBLED:
                     this.sb.append("pinMode(_led_red_").append(usedConfigurationBlock.getUserDefinedPortName()).append(", OUTPUT);");
-                    nlIndent();
+                    this.nlIndent();
                     this.sb.append("pinMode(_led_green_").append(usedConfigurationBlock.getUserDefinedPortName()).append(", OUTPUT);");
-                    nlIndent();
+                    this.nlIndent();
                     this.sb.append("pinMode(_led_blue_").append(usedConfigurationBlock.getUserDefinedPortName()).append(", OUTPUT);");
-                    nlIndent();
+                    this.nlIndent();
                     break;
                 case SC.KEY:
                     this.sb.append("pinMode(_button_").append(usedConfigurationBlock.getUserDefinedPortName()).append(", INPUT);");
-                    nlIndent();
+                    this.nlIndent();
                     break;
                 case SC.HUMIDITY:
                     this.sb.append("_hdc1080_").append(usedConfigurationBlock.getUserDefinedPortName()).append(".begin();");
-                    nlIndent();
+                    this.nlIndent();
                     break;
                 // no additional configuration needed:
+                case SC.ULTRASONIC:
                 case SC.POTENTIOMETER:
                 case SC.LIGHT:
                 case SC.BUZZER:
@@ -294,35 +302,39 @@ public class SenseboxCppVisitor extends AbstractCommonArduinoCppVisitor implemen
             switch ( cc.getComponentType() ) {
                 case SC.LED:
                     this.sb.append("int _led_").append(blockName).append(" = ").append(cc.getProperty("INPUT")).append(";");
-                    nlIndent();
+                    this.nlIndent();
                     break;
                 case SC.RGBLED:
                     this.sb.append("int _led_red_").append(blockName).append(" = ").append(cc.getProperty("RED")).append(";");
-                    nlIndent();
+                    this.nlIndent();
                     this.sb.append("int _led_green_").append(blockName).append(" = ").append(cc.getProperty("GREEN")).append(";");
-                    nlIndent();
+                    this.nlIndent();
                     this.sb.append("int _led_blue_").append(blockName).append(" = ").append(cc.getProperty("BLUE")).append(";");
-                    nlIndent();
+                    this.nlIndent();
                     break;
                 case SC.KEY:
                     this.sb.append("int _taster_").append(blockName).append(" = ").append(cc.getProperty("PIN1")).append(";");
-                    nlIndent();
+                    this.nlIndent();
                     break;
                 case SC.LIGHT:
                     this.sb.append("int _output_").append(blockName).append(" = ").append(cc.getProperty("OUTPUT")).append(";");
-                    nlIndent();
+                    this.nlIndent();
                     break;
                 case SC.POTENTIOMETER:
                     this.sb.append("int _potentiometer_").append(blockName).append(" = ").append(cc.getProperty("OUTPUT")).append(";");
-                    nlIndent();
+                    this.nlIndent();
                     break;
                 case SC.BUZZER:
                     this.sb.append("int _buzzer_").append(blockName).append(" = ").append(cc.getProperty("+")).append(";");
-                    nlIndent();
+                    this.nlIndent();
                     break;
                 case SC.HUMIDITY:
                     this.sb.append("HDC1080 _hdc1080_").append(blockName).append(";");
-                    nlIndent();
+                    this.nlIndent();
+                    break;
+                case SC.ULTRASONIC:
+                    this.sb.append("Ultrasonic _hcsr04_").append(blockName).append(";");
+                    this.nlIndent();
                     break;
                 default:
                     throw new DbcException("Configuration block is not supported: " + cc.getComponentType());

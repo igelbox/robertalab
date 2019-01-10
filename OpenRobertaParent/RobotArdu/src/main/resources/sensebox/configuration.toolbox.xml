@@ -9,5 +9,6 @@
     <block type="robConf_light" />
     <block type="robConf_potentiometer" />
     <block type="robConf_humidity" />
+    <block type="robConf_ultrasonic" />
   </category>
 </toolbox_set>
