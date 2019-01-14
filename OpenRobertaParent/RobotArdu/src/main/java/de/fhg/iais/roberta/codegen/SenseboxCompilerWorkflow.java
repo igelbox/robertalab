@@ -25,7 +25,7 @@ import de.fhg.iais.roberta.visitor.codegen.SenseboxCppVisitor;
 public class SenseboxCompilerWorkflow extends AbstractCompilerWorkflow {
 
     private static final Logger LOG = LoggerFactory.getLogger(SenseboxCompilerWorkflow.class);
-    private String compiledHex = "error";
+    private String binaryInBase64;
 
     // public ArduinoCompilerWorkflow(String pathToCrosscompilerBaseDir, String robotCompilerResourcesDir, String robotCompilerDir, String robot) {
     public SenseboxCompilerWorkflow(PluginProperties pluginProperties) {
@@ -70,7 +70,7 @@ public class SenseboxCompilerWorkflow extends AbstractCompilerWorkflow {
 
     @Override
     public String getCompiledCode() {
-        return this.compiledHex;
+        return this.binaryInBase64;
     }
 
     /**
@@ -112,36 +112,46 @@ public class SenseboxCompilerWorkflow extends AbstractCompilerWorkflow {
 
         try {
             String fqbnArg = "-fqbn=sensebox:samd:sb:power=on";
+            String[] command =
+                new String[] {
+                    scriptName,
+                    "-hardware=" + compilerResourcesDir + "hardware/builtin",
+                    "-hardware=" + compilerResourcesDir + "hardware/additional",
+                    "-tools=" + compilerResourcesDir + "/" + os + "/tools-builder",
+                    "-tools=" + compilerResourcesDir + "hardware/additional",
+                    "-libraries=" + compilerResourcesDir + "/libraries",
+                    fqbnArg,
+                    "-prefs=compiler.path=" + compilerBinDir,
+                    "-vid-pid=0X04D8_0XEF66",
+                    "-ide-version=10805",
+                    "-prefs=build.warn_data_percentage=75",
+                    "-prefs=runtime.tools.arduinoOTA.path=" + compilerResourcesDir + "hardware/additional/arduino/tools/arduinoOTA/1.2.0",
+                    "-prefs=runtime.tools.CMSIS.path=" + compilerResourcesDir + "hardware/additional/arduino/tools/CMSIS/4.5.0",
+                    "-prefs=runtime.tools.CMSIS-Atmel.path=" + compilerResourcesDir + "hardware/additional/arduino/tools/CMSIS-Atmel/1.1.0",
+                    "-prefs=runtime.tools.openocd.path=" + compilerResourcesDir + "hardware/additional/arduino/tools/openocd/0.9.0-arduino6-static",
+                    "-prefs=runtime.tools.arm-none-eabi-gcc.path=" + compilerResourcesDir + "hardware/additional/arduino/tools/arm-none-eabi-gcc/4.8.3-2014q1",
+                    "-prefs=runtime.tools.bossac.path=" + compilerResourcesDir + "hardware/additional/arduino/tools/bossac/1.7.0",
 
-            ProcessBuilder procBuilder =
-                new ProcessBuilder(
-                    new String[] {
-                        scriptName,
-                        "-hardware=" + compilerResourcesDir + "hardware/builtin",
-                        "-hardware=" + compilerResourcesDir + "hardware/additional",
-                        "-tools=" + compilerResourcesDir + "/" + os + "/tools-builder",
-                        "-tools=" + compilerResourcesDir + "hardware/additional",
-                        "-libraries=" + compilerResourcesDir + "/libraries",
-                        "-logger=\"human\"",
-                        fqbnArg,
-                        "-prefs=compiler.path=" + compilerBinDir,
-                        "-build-path=" + base.resolve(path).toAbsolutePath().normalize().toString() + "/target/",
-                        base.resolve(path).toAbsolutePath().normalize().toString() + "/source/" + mainFile + ".ino"
-                    });
+                    "-build-path=" + base.resolve(path).toAbsolutePath().normalize().toString() + "/target/",
+                    base.resolve(path).toAbsolutePath().normalize().toString() + "/source/" + mainFile + ".ino"
+                };
+
+            ProcessBuilder procBuilder = new ProcessBuilder(command);
 
             procBuilder.redirectInput(Redirect.INHERIT);
             procBuilder.redirectOutput(Redirect.INHERIT);
             procBuilder.redirectError(Redirect.INHERIT);
             Process p = procBuilder.start();
             int ecode = p.waitFor();
+
             System.err.println("Exit code " + ecode);
 
             if ( ecode != 0 ) {
                 return Key.COMPILERWORKFLOW_ERROR_PROGRAM_COMPILE_FAILED;
             }
-            this.compiledHex = FileUtils.readFileToString(new File(path + "/target/" + mainFile + ".ino.hex"), "UTF-8");
+            byte[] binary = FileUtils.readFileToByteArray(new File(path + "/target/" + mainFile + ".ino.bin"));
             Base64.Encoder urec = Base64.getEncoder();
-            this.compiledHex = urec.encodeToString(this.compiledHex.getBytes());
+            this.binaryInBase64 = urec.encodeToString(binary);
             return Key.COMPILERWORKFLOW_SUCCESS;
         } catch ( Exception e ) {
             if ( sb.length() > 0 ) {
