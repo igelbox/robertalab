@@ -1,7 +1,7 @@
 {
 	"@metadata": {
 		"author": "Ellen Spertus <ellen.spertus@gmail.com>",
-		"lastupdated": "2019-01-15 10:54:08.120026",
+		"lastupdated": "2019-01-15 14:38:52.093690",
 		"locale": "en",
 		"messagedocumentation" : "qqq"
 	},
@@ -562,6 +562,7 @@
 	"MODE_PRESENCE": "presence",
 	"MODE_COLOUR": "colour",
 	"MODE_LIGHT": "light",
+	"MODE_UVLIGHT": "UV light",
 	"MODE_LINE": "line",
 	"MODE_RGB": "RGB",
 	"MODE_AMBIENTLIGHT": "ambient light",
@@ -867,6 +868,7 @@
 	"MOTOR_STEER": "steer",
 	"MODE_OBSTACLE": "obstacle",
 	"SENSOR_LIGHT": "light sensor",
+	"SENSOR_LIGHTVEML": "visible and UV light sensor",
 	"SENSOR_AMBIENTLIGHT": "ambientlight sensor",
 	"LIGHT_GETSAMPLE_TOOLTIP": "Gets the current reading from the light sensor in percent.",
 	"SENSOR_SOUND": "sound sensor",
@@ -1314,6 +1316,7 @@
 	"SENSOR_ULTRASONIC_DISTANCE_GETSAMPLE_TOOLTIP_ARDUINO": "Gets the current reading from the ultrasonic sensor in cm. Maximum distance to messure is 400 cm.",
 	"SENSOR_ULTRASONIC_DISTANCE_GETSAMPLE_TOOLTIP_MBOT": "Gets the current reading from the ultrasonic sensor in cm. Maximum distance to messure is 400 cm. Minimum distance tp measure is 3 cm.",
 	"SENSOR_IRSEEKER_GETSAMPLE_TOOLTIP": "Gets the position of an infrared beacon.",
+	"SENSOR_LIGHTVEML_GETSAMPLE_TOOLTIP": "Gets either visible or UV light dependent on the mode",
 	"SENSOR_RSSI": "signal strength",
 	"SENSOR_RSSI_VALUE_GETSAMPLE_TOOLTIP": "Gets the signal strength from the last received message.",
 	"SENSOR_GESTURE_UP_GETSAMPLE_TOOLTIP": "Returns »true« if the posture is upright.",

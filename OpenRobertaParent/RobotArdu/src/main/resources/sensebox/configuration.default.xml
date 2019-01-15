@@ -1,8 +1,5 @@
 <block_set xmlns="http://de.fhg.iais.roberta.blockly" robottype="sensebox" xmlversion="2.0" description="" tags="">
   <instance x="138" y="88">
-    <block type="robConf_led" id="1" intask="true">
-      <field name="NAME">L</field>
-      <field name="INPUT">13</field>
-    </block>
+    <block type="robConf_led" id="1" intask="true" />
   </instance>
 </block_set>

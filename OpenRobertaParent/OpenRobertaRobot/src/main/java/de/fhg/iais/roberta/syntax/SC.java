@@ -101,4 +101,7 @@ public interface SC {
     String ANY = "ANY";
     String ENTER = "ENTER";
     String PRESSURE = "PRESSURE";
+    String VEML = "VEML";
+    String UVLIGHT = "UVLIGHT";
+    String LIGHTVEML = "LIGHTVEML";
 }

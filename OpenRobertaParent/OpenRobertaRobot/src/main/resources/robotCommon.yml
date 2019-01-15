@@ -7,6 +7,10 @@ block:
       category: SENSOR
       implementor: de.fhg.iais.roberta.syntax.sensor.generic.LightSensor
       type: [robSensors_light_getSample,sim_light_getSample]
+  VEMLLIGHT_SENSING:
+      category: SENSOR
+      implementor: de.fhg.iais.roberta.syntax.sensor.generic.VemlLightSensor
+      type: [robSensors_lightveml_getSample]
   SOUND_SENSING:
       category: SENSOR
       implementor: de.fhg.iais.roberta.syntax.sensor.generic.SoundSensor
@@ -684,6 +688,7 @@ mode:
   infrared: [AMBIENTLIGHT,DEFAULT,DISTANCE,OBSTACLE,PRESENCE,SEEK,LINE,MODULATED,UNMODULATED,VALUE,REFLEXION]
   keys: [PRESSED,WAIT_FOR_PRESS,WAIT_FOR_PRESS_AND_RELEASE]
   light: [AMBIENTLIGHT,DEFAULT,LEFT,LIGHT,LIGHT_VALUE,RED,RIGHT,VALUE]
+  lightveml: [UVLIGHT]
   moisture: [VALUE,PRESENCE,VALUE]
   pinpull: [DOWN,NONE,UP]
   pinvalue: [ANALOG,DEFAULT,DIGITAL,PULSEHIGH,PULSELOW]
@@ -723,6 +728,7 @@ configuration:
   LED_MATRIX: [robBrick_led_matrix]
   LED_ON_BOARD: [makeblockActions_leds_on]
   LIGHT: [robConf_light, robBrick_light]
+  LIGHTVEML: [robConf_lightveml]
   MEDIUM: [robBrick_motor_middle]
   MOISTURE: [robConf_moisture, robBrick_moisture]
   MOTION: [robConf_motion, robBrick_motion]

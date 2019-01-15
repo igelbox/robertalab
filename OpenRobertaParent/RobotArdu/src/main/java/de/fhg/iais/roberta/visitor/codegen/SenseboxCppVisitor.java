@@ -31,6 +31,7 @@ import de.fhg.iais.roberta.syntax.sensor.generic.SoundSensor;
 import de.fhg.iais.roberta.syntax.sensor.generic.TemperatureSensor;
 import de.fhg.iais.roberta.syntax.sensor.generic.TimerSensor;
 import de.fhg.iais.roberta.syntax.sensor.generic.UltrasonicSensor;
+import de.fhg.iais.roberta.syntax.sensor.generic.VemlLightSensor;
 import de.fhg.iais.roberta.syntax.sensor.generic.VoltageSensor;
 import de.fhg.iais.roberta.util.dbc.DbcException;
 import de.fhg.iais.roberta.visitor.collect.SenseboxUsedHardwareCollectorVisitor;
@@ -271,6 +272,21 @@ public class SenseboxCppVisitor extends AbstractCommonArduinoCppVisitor implemen
     }
 
     @Override
+    public Void visitVemlLightSensor(VemlLightSensor<Void> vemlLightSensor) {
+        switch ( vemlLightSensor.getMode() ) {
+            case SC.LIGHT:
+                this.sb.append("_tsl_").append(vemlLightSensor.getPort()).append(".getIlluminance()");
+                break;
+            case SC.UVLIGHT:
+                this.sb.append("_veml_").append(vemlLightSensor.getPort()).append(".getUvIntensity()");
+                break;
+            default:
+                throw new DbcException("Invalide mode for VEML/TSL Sensor!" + vemlLightSensor.getMode());
+        }
+        return null;
+    }
+
+    @Override
     public Void visitTimerSensor(TimerSensor<Void> timerSensor) {
         switch ( timerSensor.getMode() ) {
             case SC.DEFAULT:
@@ -311,6 +327,12 @@ public class SenseboxCppVisitor extends AbstractCommonArduinoCppVisitor implemen
                     break;
                 case SC.TEMPERATURE:
                     this.sb.append("_bmp280_").append(usedConfigurationBlock.getUserDefinedPortName()).append(".begin()");
+                    this.nlIndent();
+                    break;
+                case SC.LIGHTVEML:
+                    this.sb.append("_veml_").append(usedConfigurationBlock.getUserDefinedPortName()).append(".begin()");
+                    this.nlIndent();
+                    this.sb.append("_tsl_").append(usedConfigurationBlock.getUserDefinedPortName()).append(".begin()");
                     this.nlIndent();
                     break;
                 // no additional configuration needed:
@@ -372,6 +394,12 @@ public class SenseboxCppVisitor extends AbstractCommonArduinoCppVisitor implemen
                     break;
                 case SC.ULTRASONIC:
                     this.sb.append("Ultrasonic _hcsr04_").append(blockName).append(";");
+                    this.nlIndent();
+                    break;
+                case SC.LIGHTVEML:
+                    this.sb.append("VEML6070 _veml_").append(blockName).append(";");
+                    this.nlIndent();
+                    this.sb.append("TSL45315 _tsl_").append(blockName).append(";");
                     this.nlIndent();
                     break;
                 default:

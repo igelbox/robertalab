@@ -12,5 +12,6 @@
     <block type="robConf_temperature" />
     <block type="robConf_ultrasonic" />
     <block type="robConf_sound" />
+    <block type="robConf_lightveml" />
   </category>
 </toolbox_set>
