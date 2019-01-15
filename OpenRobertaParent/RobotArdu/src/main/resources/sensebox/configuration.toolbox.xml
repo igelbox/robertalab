@@ -11,5 +11,6 @@
     <block type="robConf_humidity" />
     <block type="robConf_temperature" />
     <block type="robConf_ultrasonic" />
+    <block type="robConf_sound" />
   </category>
 </toolbox_set>

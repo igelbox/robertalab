@@ -735,7 +735,7 @@ configuration:
   RFID: [robConf_rfid, robBrick_rfide]
   RGBLED: [robConf_rgbled]
   SERVOMOTOR: [robConf_servo]
-  SOUND: [robBrick_sound]
+  SOUND: [robBrick_sound, robConf_sound]
   STEPMOTOR: [robConf_stepmotor]
   TEMPERATURE: [robConf_temperature, robBrick_temperature]
   TIMER: [robBrick_timer]

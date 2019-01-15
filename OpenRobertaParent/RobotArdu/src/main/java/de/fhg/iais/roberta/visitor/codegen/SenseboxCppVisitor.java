@@ -27,6 +27,7 @@ import de.fhg.iais.roberta.syntax.lang.expr.Var;
 import de.fhg.iais.roberta.syntax.sensor.generic.HumiditySensor;
 import de.fhg.iais.roberta.syntax.sensor.generic.KeysSensor;
 import de.fhg.iais.roberta.syntax.sensor.generic.LightSensor;
+import de.fhg.iais.roberta.syntax.sensor.generic.SoundSensor;
 import de.fhg.iais.roberta.syntax.sensor.generic.TemperatureSensor;
 import de.fhg.iais.roberta.syntax.sensor.generic.TimerSensor;
 import de.fhg.iais.roberta.syntax.sensor.generic.UltrasonicSensor;
@@ -119,6 +120,12 @@ public class SenseboxCppVisitor extends AbstractCommonArduinoCppVisitor implemen
         this.sb.append(", ");
         toneAction.getDuration().visit(this);
         this.sb.append(");");
+        return null;
+    }
+
+    @Override
+    public Void visitSoundSensor(SoundSensor<Void> soundSensor) {
+        this.sb.append("analogRead(_mic_").append(soundSensor.getPort()).append(")");
         return null;
     }
 
@@ -311,6 +318,7 @@ public class SenseboxCppVisitor extends AbstractCommonArduinoCppVisitor implemen
                 case SC.POTENTIOMETER:
                 case SC.LIGHT:
                 case SC.BUZZER:
+                case SC.SOUND:
                     break;
                 default:
                     throw new DbcException("Sensor is not supported: " + usedConfigurationBlock.getComponentType());
@@ -348,6 +356,10 @@ public class SenseboxCppVisitor extends AbstractCommonArduinoCppVisitor implemen
                     break;
                 case SC.BUZZER:
                     this.sb.append("int _buzzer_").append(blockName).append(" = ").append(cc.getProperty("+")).append(";");
+                    this.nlIndent();
+                    break;
+                case SC.SOUND:
+                    this.sb.append("int _mic_").append(blockName).append(" = ").append(cc.getProperty("OUT")).append(";");
                     this.nlIndent();
                     break;
                 case SC.HUMIDITY:

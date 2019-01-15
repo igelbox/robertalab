@@ -37,6 +37,7 @@
     <block type="robSensors_humidity_getSample"/>
     <block type="robSensors_temperature_getSample"/>
     <block type="robSensors_ultrasonic_getSample"/>
+    <block type="robSensors_sound_getSample"/>
   </category>
   <category name="TOOLBOX_CONTROL" svg="true">
     <block type="robControls_if"/>
