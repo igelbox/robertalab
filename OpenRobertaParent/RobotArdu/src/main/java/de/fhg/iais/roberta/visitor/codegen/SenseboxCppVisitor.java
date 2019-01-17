@@ -335,6 +335,19 @@ public class SenseboxCppVisitor extends AbstractCommonArduinoCppVisitor implemen
                     this.sb.append("_tsl_").append(usedConfigurationBlock.getUserDefinedPortName()).append(".begin()");
                     this.nlIndent();
                     break;
+                case SC.WIRELESS:
+                    this.sb
+                        .append("_bee_")
+                        .append(usedConfigurationBlock.getUserDefinedPortName())
+                        .append("->connectToWifi(\"")
+                        .append(usedConfigurationBlock.getProperty("SSID"))
+                        .append("\",\"")
+                        .append(usedConfigurationBlock.getProperty("PASSWORD"))
+                        .append("\");");
+                    this.nlIndent();
+                    this.sb.append("delay(1000);");
+                    this.nlIndent();
+                    break;
                 // no additional configuration needed:
                 case SC.ULTRASONIC:
                 case SC.POTENTIOMETER:
@@ -400,6 +413,10 @@ public class SenseboxCppVisitor extends AbstractCommonArduinoCppVisitor implemen
                     this.sb.append("VEML6070 _veml_").append(blockName).append(";");
                     this.nlIndent();
                     this.sb.append("TSL45315 _tsl_").append(blockName).append(";");
+                    this.nlIndent();
+                    break;
+                case SC.WIRELESS:
+                    this.sb.append("Bee* _bee_").append(blockName).append(" = new Bee();");
                     this.nlIndent();
                     break;
                 default:

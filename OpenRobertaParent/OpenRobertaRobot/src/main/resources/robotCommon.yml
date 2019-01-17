@@ -748,3 +748,4 @@ configuration:
   TOUCH: [robBrick_touch]
   ULTRASONIC: [robConf_ultrasonic, robBrick_ultrasonic]
   WEDO: [robBrick_WeDo-Brick]
+  WIRELESS: [robConf_wireless]

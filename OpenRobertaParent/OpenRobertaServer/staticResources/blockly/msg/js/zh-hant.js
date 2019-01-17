@@ -27,6 +27,7 @@ Blockly.Msg.ACTION_SERIAL_PRINT_TOOLTIP = "顯示資料在串列監視器上。�
 Blockly.Msg.ACTION_SERVO = "伺服電機";
 Blockly.Msg.ACTION_SERVO_ARDUINO = "servo motor SG90";  // untranslated
 Blockly.Msg.ACTION_STEPMOTOR = "步進電機";
+Blockly.Msg.ACTION_WIRELESS = "WiFi connection";  // untranslated
 Blockly.Msg.ACTIVITY_TOOLTIP = "標記一個額外的活動";
 Blockly.Msg.ACTOR_MODE_ANALOGIN_TOOLTIP = "Writes an analog value (PWM wave) to a pin. Only values between 0 and 255 should be used";  // untranslated
 Blockly.Msg.ACTOR_MODE_DIGITALIN_TOOLTIP = "Writes a HIGH or a LOW value to a digital pin. Only the values HIGH »1« and LOW »0« should be used.";  // untranslated

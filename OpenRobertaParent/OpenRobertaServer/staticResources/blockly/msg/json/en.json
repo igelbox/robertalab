@@ -1,7 +1,7 @@
 {
 	"@metadata": {
 		"author": "Ellen Spertus <ellen.spertus@gmail.com>",
-		"lastupdated": "2019-01-15 14:38:52.093690",
+		"lastupdated": "2019-01-17 15:46:30.943983",
 		"locale": "en",
 		"messagedocumentation" : "qqq"
 	},
@@ -1488,5 +1488,6 @@
 	"SLOT_RIGHT": "right",
 	"POPUP_MULTIPLE_ROBOTS": "Select multiple programs for the simulation",
 	"POPUP_MULTROBOTS_NOPROGRAMS": "Please create and store at least two programs which then can be executed each by a simulated robot!",
-	"MENU_RUN_MULT_SIM": "multiple robot simulation ..."
+	"MENU_RUN_MULT_SIM": "multiple robot simulation ...",
+	"ACTION_WIRELESS": "WiFi connection"
 }

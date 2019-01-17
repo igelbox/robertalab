@@ -27,6 +27,7 @@ Blockly.Msg.ACTION_SERIAL_PRINT_TOOLTIP = "Zeige Daten auf dem Serial Monitor. I
 Blockly.Msg.ACTION_SERVO = "Servomotor";
 Blockly.Msg.ACTION_SERVO_ARDUINO = "Servomotor SG90";
 Blockly.Msg.ACTION_STEPMOTOR = "Schrittmotor";
+Blockly.Msg.ACTION_WIRELESS = "WiFi connection";
 Blockly.Msg.ACTIVITY_TOOLTIP = "Block für eine zusätzliche Aktivität.";
 Blockly.Msg.ACTOR_MODE_ANALOGIN_TOOLTIP = "Schreibt einen analogen Wert (PWM wave) auf einen Pin. Werte zwischen 0 und 255 können eingegeben werden.";
 Blockly.Msg.ACTOR_MODE_DIGITALIN_TOOLTIP = "Schreibt einen digitalen Wert auf einen Pin. Die Werte HIGH »1« oder LOW »0« können eingegeben werden.";
