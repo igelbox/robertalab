@@ -126,7 +126,7 @@ define([ 'exports', 'util', 'log', 'message', 'guiState.controller', 'guiState.m
         UTIL.showSingleModal(function() {
             $('#singleModalInput').attr('type', 'text');
             $('#single-modal h3').text(Blockly.Msg["MENU_CONNECT"]);
-            $('#single-modal label').text(Blockly.Msg["POPUP_VALUE"]);
+            $('#single-modal label').text(Blockly.Msg["POPUP_TOKEN"]);
             $('#singleModalInput').addClass('capitalLetters');
             $('#single-modal a[href]').text(Blockly.Msg["POPUP_STARTUP_HELP"]);
             $('#single-modal a[href]').attr("href", "http://wiki.open-roberta.org");

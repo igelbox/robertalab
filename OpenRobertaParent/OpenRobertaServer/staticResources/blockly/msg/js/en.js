@@ -1030,6 +1030,7 @@ Blockly.Msg.POPUP_TOUR = "take a tour";
 Blockly.Msg.POPUP_USERNAME = "Username";
 Blockly.Msg.POPUP_USERNAME_LOGOFF = "You are not logged in.";
 Blockly.Msg.POPUP_VALUE = "Value";
+Blockly.Msg.POPUP_TOKEN = "Token";
 Blockly.Msg.PORT_ANKLE = "ankle";
 Blockly.Msg.PORT_BUMPER = "bumper";
 Blockly.Msg.PORT_ELBOW = "elbow";
