@@ -422,6 +422,9 @@ define([ 'exports', 'message', 'log', 'jquery', 'jquery-validate', 'bootstrap' ]
         var $elements = (opt.handle === "") ? this : this.find(opt.handle);
 
         $elements.css('cursor', opt.cursor).on("mousedown touchstart", function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+        
             var pageX = e.pageX || e.originalEvent.touches[0].pageX;
             var pageY = e.pageY || e.originalEvent.touches[0].pageY;
             if (opt.handle === "") {
